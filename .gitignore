@@ -3,6 +3,7 @@ node_modules/
 
 # Build output
 dist/
+dist-ssr/
 
 # Environment / secrets — never commit a real .env
 .env

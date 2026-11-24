@@ -5,9 +5,10 @@ import { getVersion, subscribe } from '../services/demoStore';
  * Runs an async loader and re-runs it whenever the demo data changes (this tab
  * or another tab). With a real API this becomes a normal fetch + polling/websocket.
  */
-export function useQuery<T>(loader: () => Promise<T>, deps: unknown[] = []) {
+export function useQuery<T>(loader: () => Promise<T>, deps: unknown[] = [], initialData?: T) {
   const version = useSyncExternalStore(subscribe, getVersion, getVersion);
-  const [data, setData] = useState<T | undefined>(undefined);
+  // initialData lets pre-rendered pages show real content immediately (no skeleton / layout shift).
+  const [data, setData] = useState<T | undefined>(initialData);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
