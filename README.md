@@ -1,6 +1,10 @@
-# Cake Palace — online ordering (v1, front end only)
+# Cake Palace — bakery website (v1, front end only)
 
-This is the first version of the Cake Palace website: customers in Hyderabad can browse the menu, choose cake options, add to cart, pick pickup or delivery with a date and time slot, "pay" and track their order. There's also a custom-cake request form, a shop admin area and a simple screen for delivery staff.
+The Cake Palace website for Hyderabad. Its main job is to get **enquiries**: every page has a Call button (plus a sticky Call / Enquire bar on phones), and Home and Contact have an enquiry form that sends the details to the shop's WhatsApp.
+
+- **Information pages:** Home, About, Cakes (what we sell + prices), Gallery, Reviews, Contact.
+- **Online ordering (secondary):** customers can also browse the menu, add to cart, choose pickup or delivery with a date and time slot, "pay" and track their order, or request a custom-cake quote.
+- **Staff:** a shop admin area and a simple screen for delivery staff.
 
 **Everything runs in the browser on sample data.** There is no real login, database, payment or WhatsApp/SMS sending yet — those places are marked with mock labels on screen and `TODO` comments in the code.
 
@@ -17,8 +21,13 @@ Open http://localhost:5173.
 
 | Page | Address |
 | --- | --- |
-| Home | `/` |
-| Menu | `/menu` |
+| Home (Call + enquiry form) | `/` |
+| About | `/about` |
+| Cakes ("Cake Selling": occasions, flavours, prices) | `/cakes` |
+| Gallery | `/gallery` |
+| Reviews | `/reviews` |
+| Contact (Call + enquiry form) | `/contact` |
+| Menu (order online) | `/menu` |
 | Product | `/product/black-forest` (any item's slug) |
 | Custom cake request | `/custom-cake` |
 | Cart / Checkout | `/cart`, `/checkout` |
@@ -33,10 +42,42 @@ Open http://localhost:5173.
 
 **Demo tip:** open the customer site in one tab and `/admin` in another. Orders you place show up on the admin board straight away (the demo data is shared through the browser's storage). To start again, use **Admin → Settings → Reset demo data**.
 
+## Enquiries
+
+The enquiry form (Home and Contact) checks the name and mobile number, then opens **WhatsApp with the enquiry already written** to the shop's number — the customer just taps Send. Nothing is stored on a server yet, so an enquiry only reaches the shop if the customer sends that WhatsApp message. Links like "Enquire about Red Velvet" on the Cakes page pre-fill the form.
+
+The shop's WhatsApp number is `whatsappDefault` in `src/config/shop.ts` (digits only with country code, e.g. `919000000000`).
+
+## Google search (SEO)
+
+Each information page's Google **title and description** are in `src/config/seo.ts`. They all mention "Bakery in Hyderabad":
+
+| Page | Title |
+| --- | --- |
+| Home | Cake Palace – Bakery in Hyderabad \| Fresh Cakes Daily |
+| About | About Cake Palace \| Bakery in Hyderabad, Banjara Hills |
+| Cakes | Cakes for Every Occasion \| Bakery in Hyderabad |
+| Gallery | Cake Gallery \| Cake Palace, Bakery in Hyderabad |
+| Reviews | Customer Reviews \| Cake Palace, Bakery in Hyderabad |
+| Contact | Contact Cake Palace \| Bakery in Hyderabad – Call Us |
+
+`npm run build` **pre-renders** these six pages into real HTML files (`dist/index.html`, `dist/about.html`, …), with the title, description, social-sharing tags and, on Home and Contact, schema.org "Bakery" details for Google Maps-style results. So Google, WhatsApp link previews and slow phones all see the page without waiting for JavaScript. It also writes `robots.txt`, which keeps cart, checkout, order and staff pages out of Google.
+
+**Before launch, set `SITE_URL`** in `src/config/seo.ts` to the real address (e.g. `https://www.cakepalace.in`). The build then also adds canonical links and `sitemap.xml`. Submit the sitemap in Google Search Console, and set up a Google Business Profile with the same name, address and phone.
+
+## Speed on phones
+
+- Information pages are pre-rendered HTML: text, buttons and images show before any JavaScript runs.
+- Online-ordering, admin and delivery screens are separate downloads, loaded only when opened.
+- The Poppins font loads without blocking the page, with a size-matched fallback so text doesn't jump when it arrives.
+- Images have fixed sizes (no layout shift) and load lazily below the fold.
+
+Lighthouse (mobile, simulated slow 4G, with gzip like Cloudflare) scored **90–99 performance, 100 SEO, 100 accessibility, 100 best practices** on all six pages, with zero layout shift. After deploying, check the live site at https://pagespeed.web.dev. **Real photos are the biggest risk to speed:** keep each under ~200 KB (WebP or compressed JPEG, about 1200 px square).
+
 ## Build
 
 ```bash
-npm run build     # type-checks, then builds into ./dist
+npm run build     # type-checks, builds into ./dist, then pre-renders the 6 information pages
 npm run preview   # serves the built site locally
 ```
 
@@ -62,6 +103,11 @@ Wrangler prints the live URL (e.g. `https://cake-palace.<your-subdomain>.workers
 | Sample orders / custom requests | `src/data/orders.ts`, `src/data/customRequests.ts` |
 | Delivery staff | `src/data/people.ts` |
 | Sample reviews (**not real**) | `src/data/reviews.ts` |
+| Google titles & descriptions, `SITE_URL` | `src/config/seo.ts` |
+| About page story (**placeholder copy**) | `src/pages/AboutPage.tsx` |
+| Cakes page occasions | `src/pages/CakesPage.tsx` |
+| Gallery photos and captions | `src/pages/GalleryPage.tsx` |
+| Google review link | `GOOGLE_REVIEW_URL` in `src/pages/ReviewsPage.tsx` |
 | Colours and font | top of `src/styles/global.css` (`--brown`, `--pink`, `--font`) |
 
 The admin Settings and Menu screens change a copy stored in that browser only; edit the files above to change the defaults for everyone.
@@ -86,7 +132,11 @@ Search the code for `TODO` to find every integration point (login, database, Raz
 
 ## Before launch checklist
 
-- [ ] Real product photos in `public/images` (same file names)
+- [ ] Set `SITE_URL` in `src/config/seo.ts`, deploy, submit `sitemap.xml` in Google Search Console, and create/verify a Google Business Profile
+- [ ] Rewrite the About page story in the owner's words (it's placeholder copy) and add real Gallery photos
+- [ ] Add the Google "write a review" link (`GOOGLE_REVIEW_URL`) and real reviews on the Reviews page
+- [ ] Decide whether enquiries should also be saved/emailed automatically (today they rely on the customer tapping Send in WhatsApp)
+- [ ] Real product photos in `public/images` (same file names), each under ~200 KB
 - [ ] Real phone, WhatsApp number, address, hours and Instagram in `src/config/shop.ts`
 - [ ] Remove or replace the sample reviews (`src/data/reviews.ts` and the Home page section)
 - [ ] Replace the sample menu, prices and delivery-distance table with real ones
