@@ -79,7 +79,10 @@ Lighthouse (mobile, simulated slow 4G, with gzip like Cloudflare) scored **90–
 ```bash
 npm run build     # type-checks, builds into ./dist, then pre-renders the 6 information pages
 npm run preview   # serves the built site locally
+npm run preview:cloudflare   # builds, then serves it with Cloudflare's real runtime at http://localhost:8787
 ```
+
+`preview:cloudflare` is the closest check to the live site (e.g. `/about` → `about.html`). On Windows it needs the **Microsoft Visual C++ Redistributable (x64)**; without it, Wrangler fails with `write EOF` / exit code `0xC0000135`. Install it with `winget install Microsoft.VCRedist.2015+.x64`.
 
 ## Deploy to Cloudflare Workers
 
