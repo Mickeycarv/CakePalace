@@ -1,16 +1,27 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, type ComponentType, type ReactNode } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { SiteLayout } from './components/SiteLayout';
 import { Loading, NotFound } from './components/ui';
+// Information pages: bundled up front and pre-rendered to static HTML at build time.
 import { HomePage } from './pages/HomePage';
-import { MenuPage } from './pages/MenuPage';
-import { ProductPage } from './pages/ProductPage';
-import { CartPage } from './pages/CartPage';
-import { CheckoutPage } from './pages/CheckoutPage';
-import { OrderConfirmedPage } from './pages/OrderConfirmedPage';
-import { MyOrdersPage } from './pages/MyOrdersPage';
-import { CustomCakePage } from './pages/CustomCakePage';
-import { QuotePage } from './pages/QuotePage';
+import { AboutPage } from './pages/AboutPage';
+import { CakesPage } from './pages/CakesPage';
+import { GalleryPage } from './pages/GalleryPage';
+import { ReviewsPage } from './pages/ReviewsPage';
+import { ContactPage } from './pages/ContactPage';
+
+const named = <K extends string>(load: () => Promise<Record<K, ComponentType>>, name: K) =>
+  lazy(() => load().then((m) => ({ default: m[name] })));
+
+// Online-ordering pages: loaded only when visited, keeping the first download small on phones.
+const MenuPage = named(() => import('./pages/MenuPage'), 'MenuPage');
+const ProductPage = named(() => import('./pages/ProductPage'), 'ProductPage');
+const CustomCakePage = named(() => import('./pages/CustomCakePage'), 'CustomCakePage');
+const CartPage = named(() => import('./pages/CartPage'), 'CartPage');
+const CheckoutPage = named(() => import('./pages/CheckoutPage'), 'CheckoutPage');
+const OrderConfirmedPage = named(() => import('./pages/OrderConfirmedPage'), 'OrderConfirmedPage');
+const MyOrdersPage = named(() => import('./pages/MyOrdersPage'), 'MyOrdersPage');
+const QuotePage = named(() => import('./pages/QuotePage'), 'QuotePage');
 
 // Staff screens are split into separate chunks so customers never download them.
 // TODO (login): protect /admin (owner) and /delivery (delivery staff) with phone
@@ -25,20 +36,27 @@ const SettingsPage = lazy(() => import('./admin/SettingsPage'));
 const DailySummary = lazy(() => import('./admin/DailySummary'));
 const DeliveryPage = lazy(() => import('./delivery/DeliveryPage'));
 
+const page = (el: ReactNode) => <Suspense fallback={<Loading />}>{el}</Suspense>;
+
 export function App() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route element={<SiteLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="menu" element={<MenuPage />} />
-          <Route path="product/:slug" element={<ProductPage />} />
-          <Route path="custom-cake" element={<CustomCakePage />} />
-          <Route path="cart" element={<CartPage />} />
-          <Route path="checkout" element={<CheckoutPage />} />
-          <Route path="order/:id" element={<OrderConfirmedPage />} />
-          <Route path="orders" element={<MyOrdersPage />} />
-          <Route path="quote/:id" element={<QuotePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="cakes" element={<CakesPage />} />
+          <Route path="gallery" element={<GalleryPage />} />
+          <Route path="reviews" element={<ReviewsPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="menu" element={page(<MenuPage />)} />
+          <Route path="product/:slug" element={page(<ProductPage />)} />
+          <Route path="custom-cake" element={page(<CustomCakePage />)} />
+          <Route path="cart" element={page(<CartPage />)} />
+          <Route path="checkout" element={page(<CheckoutPage />)} />
+          <Route path="order/:id" element={page(<OrderConfirmedPage />)} />
+          <Route path="orders" element={page(<MyOrdersPage />)} />
+          <Route path="quote/:id" element={page(<QuotePage />)} />
           <Route path="*" element={<div className="container section"><NotFound /></div>} />
         </Route>
         <Route path="admin" element={<AdminLayout />}>
