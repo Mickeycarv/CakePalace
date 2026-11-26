@@ -1,9 +1,15 @@
-import { PRODUCT_IMAGE_EXT } from '../config/shop';
+import { PRODUCT_IMAGE_EXT, REAL_PHOTOS } from '../config/shop';
 import type { CategoryId } from '../types';
 
 /** /images/products/<slug>-<n>.<ext> — see the naming scheme in src/config/shop.ts. */
 export function productImage(slug: string, n = 1): string {
-  return `/images/products/${slug}-${n}.${PRODUCT_IMAGE_EXT}`;
+  const ext = n === 1 && REAL_PHOTOS[slug] ? REAL_PHOTOS[slug] : PRODUCT_IMAGE_EXT;
+  return `/images/products/${slug}-${n}.${ext}`;
+}
+
+/** Real photo available? (Products with one show just that photo, not illustrations.) */
+export function hasRealPhoto(slug: string): boolean {
+  return Boolean(REAL_PHOTOS[slug]);
 }
 
 export const PLACEHOLDER_IMAGE = '/images/products/placeholder.svg';

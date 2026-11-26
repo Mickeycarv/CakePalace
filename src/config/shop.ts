@@ -34,6 +34,18 @@ export const SHOP_MAPS_URL =
  */
 export const PRODUCT_IMAGE_EXT = 'svg';
 
+/**
+ * Products that have REAL photos: slug → file extension. These load
+ * /images/products/<slug>-1.<ext> instead of the SVG illustration.
+ * To add one: save an 800×800 px photo (WebP or JPEG, under ~150 KB) as
+ * public/images/products/<slug>-1.webp and add the slug here.
+ */
+export const REAL_PHOTOS: Record<string, string> = {
+  'black-forest': 'webp',
+  'chocolate-truffle': 'webp',
+  'red-velvet': 'webp',
+};
+
 export const DEFAULT_SETTINGS: ShopSettings = {
   timeSlots: [
     { id: '10-12', startHour: 10, endHour: 12, enabled: true },

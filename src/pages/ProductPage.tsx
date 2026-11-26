@@ -9,7 +9,7 @@ import { useSettings } from '../context/SettingsContext';
 import { Img } from '../components/Img';
 import { Icon } from '../components/Icon';
 import { Loading, NotFound, ProductTags, QtyStepper } from '../components/ui';
-import { productImage } from '../lib/links';
+import { hasRealPhoto, productImage } from '../lib/links';
 import { availableWeights, egglessSurcharge, isPastSameDayCutoff, unitPriceFor } from '../lib/rules';
 import { formatINR, formatWeight } from '../lib/format';
 import { formatHHMM } from '../lib/dates';
@@ -51,6 +51,8 @@ export function ProductPage() {
   const total = unit * qty;
   const category = CATEGORIES.find((c) => c.id === product.category);
   const pastCutoff = isPastSameDayCutoff(settings);
+  // A real photo replaces the illustrated gallery for that cake.
+  const imageCount = hasRealPhoto(product.slug) ? 1 : product.imageCount;
 
   function addToCart() {
     if (!product || product.soldOut) return;
@@ -80,16 +82,16 @@ export function ProductPage() {
           <div className="gallery-main">
             <Img
               src={productImage(product.slug, imageIdx)}
-              alt={`${product.name} – photo ${imageIdx} of ${product.imageCount}`}
+              alt={imageCount > 1 ? `${product.name} – photo ${imageIdx} of ${imageCount}` : product.name}
               eager
               width={600}
               height={600}
             />
             {product.soldOut && <span className="sold-out-label">Sold out</span>}
           </div>
-          {product.imageCount > 1 && (
+          {imageCount > 1 && (
             <div className="gallery-thumbs" role="group" aria-label="Choose photo">
-              {Array.from({ length: product.imageCount }, (_, i) => i + 1).map((n) => (
+              {Array.from({ length: imageCount }, (_, i) => i + 1).map((n) => (
                 <button
                   key={n}
                   type="button"
