@@ -44,6 +44,7 @@ export const REAL_PHOTOS: Record<string, string> = {
   'black-forest': 'webp',
   'chocolate-truffle': 'webp',
   'red-velvet': 'webp',
+  'rasmalai-cake': 'webp',
 };
 
 export const DEFAULT_SETTINGS: ShopSettings = {
