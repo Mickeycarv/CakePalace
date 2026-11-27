@@ -41,10 +41,28 @@ export const PRODUCT_IMAGE_EXT = 'svg';
  * public/images/products/<slug>-1.webp and add the slug here.
  */
 export const REAL_PHOTOS: Record<string, string> = {
+  // Supplied by the owner
   'black-forest': 'webp',
   'chocolate-truffle': 'webp',
   'red-velvet': 'webp',
   'rasmalai-cake': 'webp',
+  // Openly licensed stock photos — credited on /credits (src/data/photoCredits.ts).
+  // Replace with photos of your own cakes when you can.
+  'mango-delight': 'webp',
+  'dutch-truffle': 'webp',
+  'blueberry-cheesecake': 'webp',
+  'coffee-mocha-cake': 'webp',
+  'belgian-chocolate-pastry': 'webp',
+  'black-forest-pastry': 'webp',
+  'pineapple-pastry': 'webp',
+  'red-velvet-pastry': 'webp',
+  'blueberry-cheesecake-slice': 'webp',
+  'red-velvet-cupcake': 'webp',
+  'choco-chip-cupcake': 'webp',
+  'vanilla-sprinkle-cupcake': 'webp',
+  'tiramisu-jar': 'webp',
+  'banana-walnut-loaf': 'webp',
+  'fruit-rusk': 'webp',
 };
 
 export const DEFAULT_SETTINGS: ShopSettings = {

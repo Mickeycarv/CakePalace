@@ -118,7 +118,9 @@ function Footer() {
       </div>
       <div className="container footer-bottom">
         <p suppressHydrationWarning>© {new Date().getFullYear()} Cake Palace, Hyderabad. Also on Swiggy & Zomato.</p>
-        <p className="muted-on-dark">Demo version · sample content</p>
+        <p className="muted-on-dark">
+          Demo version · sample content · <Link to="/credits">Photo credits</Link>
+        </p>
       </div>
     </footer>
   );

@@ -122,6 +122,8 @@ Placeholder illustrations live in `public/images` with fixed names:
 - `public/images/products/<slug>-1.svg`, `-2.svg`, `-3.svg` (1 is the main photo)
 - `public/images/categories/<category>.svg`, `public/images/site/hero.svg`, `public/images/site/custom-cake.svg`
 
+**Current photos:** 4 owner-supplied photos (Black Forest, Chocolate Truffle, Red Velvet, Rasmalai) and 15 openly licensed stock photos (CC BY, from Flickr/Wikimedia Commons via Openverse). The stock photos are credited on the **/credits** page (linked in the footer) — CC BY requires this, so keep that page while they're used. They're listed in `REAL_PHOTOS` in `src/config/shop.ts`; when you replace one with your own photo, also remove its entry from `src/data/photoCredits.ts`. The remaining items still use illustrations because no honest licensed match was found.
+
 To use real photos, save them with the same base names (e.g. `black-forest-1.jpg`) and change `PRODUCT_IMAGE_EXT` in `src/config/shop.ts` to `'jpg'`. Square photos about 1200×1200 px, compressed to under 200 KB, work best. `npm run images` regenerates the placeholders.
 
 ## How the code is organised

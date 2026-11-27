@@ -22,6 +22,7 @@ const CheckoutPage = named(() => import('./pages/CheckoutPage'), 'CheckoutPage')
 const OrderConfirmedPage = named(() => import('./pages/OrderConfirmedPage'), 'OrderConfirmedPage');
 const MyOrdersPage = named(() => import('./pages/MyOrdersPage'), 'MyOrdersPage');
 const QuotePage = named(() => import('./pages/QuotePage'), 'QuotePage');
+const CreditsPage = named(() => import('./pages/CreditsPage'), 'CreditsPage');
 
 // Staff screens are split into separate chunks so customers never download them.
 // TODO (login): protect /admin (owner) and /delivery (delivery staff) with phone
@@ -57,6 +58,7 @@ export function App() {
           <Route path="order/:id" element={page(<OrderConfirmedPage />)} />
           <Route path="orders" element={page(<MyOrdersPage />)} />
           <Route path="quote/:id" element={page(<QuotePage />)} />
+          <Route path="credits" element={page(<CreditsPage />)} />
           <Route path="*" element={<div className="container section"><NotFound /></div>} />
         </Route>
         <Route path="admin" element={<AdminLayout />}>
