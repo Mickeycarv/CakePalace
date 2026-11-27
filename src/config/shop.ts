@@ -40,6 +40,21 @@ export const PRODUCT_IMAGE_EXT = 'svg';
  * To add one: save an 800×800 px photo (WebP or JPEG, under ~150 KB) as
  * public/images/products/<slug>-1.webp and add the slug here.
  */
+/** Big photo at the top of Home (also preloaded for speed). */
+export const HERO_IMAGE = '/images/products/black-forest-1.webp';
+/** Photo on the About page and the "Custom cake" sections. */
+export const FEATURE_IMAGE = '/images/products/chocolate-truffle-1.webp';
+export const CUSTOM_CAKE_IMAGE = '/images/products/rasmalai-cake-1.webp';
+
+/** Photo used for each category tile on Home (a product slug with a real photo). */
+export const CATEGORY_PHOTOS: Record<string, string> = {
+  cakes: 'red-velvet',
+  pastries: 'belgian-chocolate-pastry',
+  cupcakes: 'red-velvet-cupcake',
+  'jar-cakes': 'tiramisu-jar',
+  'dry-cakes-cookies': 'banana-walnut-loaf',
+};
+
 export const REAL_PHOTOS: Record<string, string> = {
   // Supplied by the owner
   'black-forest': 'webp',

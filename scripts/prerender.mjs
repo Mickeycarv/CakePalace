@@ -32,7 +32,7 @@ for (const page of ssr.SEO_PAGES.filter((p) => p.prerender)) {
     `<meta property="og:description" content="${esc(page.description)}" />`,
     url && `<link rel="canonical" href="${esc(url)}" />`,
     url && `<meta property="og:url" content="${esc(url)}" />`,
-    page.path === '/' && `<link rel="preload" as="image" href="/images/site/hero.svg" fetchpriority="high" />`,
+    page.path === '/' && `<link rel="preload" as="image" href="${esc(ssr.HERO_IMAGE)}" fetchpriority="high" />`,
     (page.path === '/' || page.path === '/contact') &&
       `<script type="application/ld+json">${JSON.stringify(ssr.bakeryJsonLd()).replace(/</g, '\\u003c')}</script>`,
   ]

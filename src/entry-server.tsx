@@ -23,3 +23,4 @@ export function render(url: string): string {
 }
 
 export { SEO_PAGES, SITE_URL, NOINDEX_PREFIXES, bakeryJsonLd } from './config/seo';
+export { HERO_IMAGE } from './config/shop';

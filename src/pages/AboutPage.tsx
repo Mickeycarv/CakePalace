@@ -3,7 +3,7 @@ import { useSeo } from '../hooks/useTitle';
 import { Img } from '../components/Img';
 import { Icon } from '../components/Icon';
 import { CallButton, WhatsAppButton } from '../components/Enquiry';
-import { SHOP, SHOP_MAPS_URL } from '../config/shop';
+import { FEATURE_IMAGE, SHOP, SHOP_MAPS_URL } from '../config/shop';
 
 // PLACEHOLDER COPY — the owner should check and personalise this story
 // (when the shop opened, who bakes, what makes it special) before launch.
@@ -28,7 +28,7 @@ export function AboutPage() {
               </Link>
             </div>
           </div>
-          <Img src="/images/site/custom-cake.svg" alt="A celebration cake from Cake Palace" eager width={600} height={600} className="page-hero-img" />
+          <Img src={FEATURE_IMAGE} alt="A chocolate truffle cake with ganache rosettes" eager width={600} height={600} className="page-hero-img" />
         </div>
       </section>
 

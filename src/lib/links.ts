@@ -1,4 +1,4 @@
-import { PRODUCT_IMAGE_EXT, REAL_PHOTOS } from '../config/shop';
+import { CATEGORY_PHOTOS, PRODUCT_IMAGE_EXT, REAL_PHOTOS } from '../config/shop';
 import type { CategoryId } from '../types';
 
 /** /images/products/<slug>-<n>.<ext> — see the naming scheme in src/config/shop.ts. */
@@ -15,7 +15,8 @@ export function hasRealPhoto(slug: string): boolean {
 export const PLACEHOLDER_IMAGE = '/images/products/placeholder.svg';
 
 export function categoryImage(id: CategoryId): string {
-  return `/images/categories/${id}.svg`;
+  const slug = CATEGORY_PHOTOS[id];
+  return slug && REAL_PHOTOS[slug] ? productImage(slug) : `/images/categories/${id}.svg`;
 }
 
 /** wa.me link with a pre-filled message. Number = country code + digits, e.g. 919000000000. */

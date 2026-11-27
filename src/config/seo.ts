@@ -6,7 +6,7 @@
 //   2. useSeo() updates them in the browser when moving between pages.
 // Keep titles under ~60 characters and descriptions under ~155.
 // ─────────────────────────────────────────────────────────────────────────────
-import { SHOP } from './shop';
+import { HERO_IMAGE, SHOP } from './shop';
 
 /**
  * PLACEHOLDER — the live website address, e.g. 'https://www.cakepalace.in'
@@ -99,6 +99,6 @@ export function bakeryJsonLd(): Record<string, unknown> {
     openingHours: 'Mo-Su 09:00-22:00',
     servesCuisine: 'Cakes, pastries and desserts',
     priceRange: '₹₹',
-    ...(SITE_URL ? { url: SITE_URL, image: `${SITE_URL}/images/site/hero.svg` } : {}),
+    ...(SITE_URL ? { url: SITE_URL, image: `${SITE_URL}${HERO_IMAGE}` } : {}),
   };
 }

@@ -10,7 +10,7 @@ import { Icon } from '../components/Icon';
 import { CallButton, EnquiryForm, WhatsAppButton } from '../components/Enquiry';
 import { ReviewCard } from './ReviewsPage';
 import { categoryImage } from '../lib/links';
-import { SHOP, SHOP_MAPS_URL } from '../config/shop';
+import { CUSTOM_CAKE_IMAGE, HERO_IMAGE, SHOP, SHOP_MAPS_URL } from '../config/shop';
 
 export function HomePage() {
   useSeo('/');
@@ -44,7 +44,7 @@ export function HomePage() {
             </p>
           </div>
           <div className="hero-art">
-            <Img src="/images/site/hero.svg" alt="A red velvet celebration cake with a candle" eager width={600} height={600} fetchPriority="high" />
+            <Img src={HERO_IMAGE} alt="A Black Forest cake with whipped cream rosettes and chocolate shavings" eager width={600} height={600} fetchPriority="high" />
           </div>
         </div>
       </section>
@@ -109,7 +109,7 @@ export function HomePage() {
 
       <section className="section container">
         <div className="custom-promo">
-          <Img src="/images/site/custom-cake.svg" alt="A two-tier custom celebration cake" width={600} height={600} />
+          <Img src={CUSTOM_CAKE_IMAGE} alt="A festive cake decorated with pistachios, almonds and rose petals" width={600} height={600} />
           <div>
             <h2>Custom cake for your occasion</h2>
             <p>
