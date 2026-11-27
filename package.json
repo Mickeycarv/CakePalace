@@ -8,7 +8,7 @@
     "build": "tsc --noEmit -p tsconfig.json && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
     "preview:cloudflare": "npm run build && wrangler dev",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "npm run build && wrangler deploy && wrangler deploy --env domain",
     "images": "node scripts/generate-placeholders.mjs"
   },
   "dependencies": {

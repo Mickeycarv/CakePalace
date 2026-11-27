@@ -3,11 +3,33 @@
   // Cloudflare Workers Static Assets: serves the Vite build from ./dist.
   // No Worker script is needed — "single-page-application" returns index.html
   // for unknown paths so React Router handles /menu, /admin, /order/:id etc.
+  //
+  // Two Workers serve the same build (`npm run deploy` updates both):
+  //   cake-palace   → https://cake-palace.cake-palace.workers.dev
+  //   cake-palace2  → https://mickeycarvalho.com and https://www.mickeycarvalho.com
+  //                   (env "domain"; also https://cake-palace2.cake-palace.workers.dev)
   "name": "cake-palace",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
+  },
+  "env": {
+    "domain": {
+      "name": "cake-palace2",
+      // Keep https://cake-palace2.cake-palace.workers.dev working alongside the custom domain.
+      "workers_dev": true,
+      "assets": {
+        "directory": "./dist",
+        "not_found_handling": "single-page-application"
+      },
+      // Custom domains: Cloudflare creates the DNS records and HTTPS certificate.
+      // Requires mickeycarvalho.com to be an active zone in this Cloudflare account.
+      "routes": [
+        { "pattern": "mickeycarvalho.com", "custom_domain": true },
+        { "pattern": "www.mickeycarvalho.com", "custom_domain": true }
+      ]
+    }
   }
   // TODO (later): add a Worker script ("main") for Razorpay order creation /
   // signature verification and WhatsApp alerts, with secrets set via `wrangler secret put`.

@@ -13,7 +13,7 @@ import { HERO_IMAGE, SHOP } from './shop';
  * (no trailing slash). While empty, canonical links and sitemap.xml are skipped
  * so a wrong domain is never published. Set it before launch.
  */
-export const SITE_URL = '';
+export const SITE_URL = 'https://mickeycarvalho.com';
 
 export interface PageSeo {
   path: string;
